@@ -1,0 +1,32 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return '<h3>welcome</h3>'
+
+@app.route('/spam')
+def spam():
+    person = {'name': 'John', 'age': 21}
+    return person
+
+@app.route('/hello')
+def hello():
+    name = request.args.get('name')
+    return {'message': f'Hello, {name}!'}
+
+@app.route('/add')
+def add():
+    x = int(request.args.get('num1'))
+    y = int(request.args.get('num2'))
+    return { 'result': x + y }
+
+@app.errorhandler(404)
+def not_found(error):
+    print(error)
+    return {'error': str(error)}, 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
